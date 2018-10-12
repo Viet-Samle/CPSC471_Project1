@@ -1,7 +1,6 @@
 # CPSC474_Project1
 
 Group Members:
-Barry Ibarra
-Viet Le
+Barry Ibarra, Viet Le
 
 Notes:
