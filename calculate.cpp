@@ -81,7 +81,15 @@ int main() {
 
     }
 
+    cout << "P0: " << all_processes[0].p_events[0].e << " " << all_processes[0].p_events[1].e << " " << all_processes[0].p_events[2].e << " " << all_processes[0].p_events[3].e << endl;
+    cout << "\t # of Events: " << all_processes[0].all_events << endl;
 
+    cout << "P1: " << all_processes[1].p_events[0].e << " " << all_processes[1].p_events[1].e << " " << all_processes[1].p_events[2].e << endl;
+    cout << "\t # of Events: " << all_processes[1].all_events << endl;
+
+    cout << "P2: " << all_processes[2].p_events[0].e << " " << all_processes[2].p_events[1].e << " " << all_processes[2].p_events[2].e << " " << all_processes[2].p_events[3].e << endl;
+    cout << "\t # of Events: " << all_processes[2].all_events << endl;
+    cout << endl;
     while (!all_done) {
         // Printing the process being worked on
         cout << "Working on P: " << current_p << endl;
@@ -95,6 +103,7 @@ int main() {
                     all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                     all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
                     all_processes[current_p].events_done++;
+                    if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) all_processes[current_p].done = true;
                 }
                 else if (all_processes[current_p].p_events[all_processes[current_p].events_done].e[0] == 'r') {
                     char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
@@ -117,19 +126,20 @@ int main() {
                     all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
                     all_processes[current_p].events_done++;
                 }
-                if (all_processes[current_p].events_done == all_processes[current_p].all_events) all_processes[current_p].done = true;
+                if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) all_processes[current_p].done = true;
                 // current_p = (current_p + 1) % 3;
             }
         else {
                 current_p = (current_p + 1) % 3;
             }
-        if (all_processes[current_p].events_done == all_processes[current_p].all_events) all_processes[current_p].done = true;
+        if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
+          all_processes[current_p].done = true;
+          current_p = (current_p + 1) % 3;
+        }
 
         if (all_processes[0].done == true && all_processes[1].done == true && all_processes[2].done == true) all_done = true;
 
-        }
-    //TODO
-    //if (all_processes[current_p].events_done == all_processes[current_p].all_events) all_processes[current_p].done = true;
+    }
 
     for(int i = 0; i < N; i++) {
         event_count = 0;
@@ -145,3 +155,4 @@ int main() {
 
     return 0;
 }
+
