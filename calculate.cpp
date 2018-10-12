@@ -102,8 +102,12 @@ int main() {
                     sendarray[send_arg] = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                     all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                     all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
-                    all_processes[current_p].events_done++;
-                    if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) all_processes[current_p].done = true;
+                    if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
+                      all_processes[current_p].done = true;
+                    }
+                    else {
+                      all_processes[current_p].events_done++;
+                    }
                 }
                 else if (all_processes[current_p].p_events[all_processes[current_p].events_done].e[0] == 'r') {
                     char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
@@ -111,7 +115,12 @@ int main() {
                     if (sendarray[receive_arg] < 100) {
                         all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = max(all_processes[current_p].current_LCvalue, sendarray[receive_arg]) + 1;
                         all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
-                        all_processes[current_p].events_done++;
+                        if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
+                          all_processes[current_p].done = true;
+                        }
+                        else {
+                          all_processes[current_p].events_done++;
+                        }
                     }
                     else {
                         //do not have entry for send array
@@ -124,7 +133,12 @@ int main() {
                     all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
 
                     all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
-                    all_processes[current_p].events_done++;
+                    if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
+                      all_processes[current_p].done = true;
+                    }
+                    else {
+                      all_processes[current_p].events_done++;
+                    }
                 }
                 if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) all_processes[current_p].done = true;
                 // current_p = (current_p + 1) % 3;
@@ -155,4 +169,5 @@ int main() {
 
     return 0;
 }
+
 
