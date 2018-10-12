@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 
@@ -44,8 +45,10 @@ int main() {
     bool all_done = false;
     int current_p = 0;
     int send_arg;
+    int event_count;
     int receive_arg;
     int sendarray[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+    char* char_temp;
     
     cout << "Enter the input for the logical clock" << endl;
     cout << "Enter the events for the first process" << endl;
@@ -85,10 +88,9 @@ int main() {
             // TODO: while (all_processes[current_p].p_events) increment this
                 if (all_processes[current_p].p_events[all_processes[current_p].events_done].e[0] == 's') {
                     
-                    istringstream convert(all_processes[current_p].p_events[all_processes[current_p].events_done].e[1]);
+                    char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
                     
-                    if (!(convert >> send_arg)) send_arg = 0;
-                    cout << "hi arg" << send_arg << endl;
+                    send_arg = atoi(char_temp);
                     
                     sendarray[send_arg] = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                     
@@ -99,15 +101,17 @@ int main() {
                 }
                 else if (all_processes[current_p].p_events[all_processes[current_p].events_done].e[0] == 'r') {
                     
-                    istringstream convert(all_processes[current_p].p_events[all_processes[current_p].events_done].e[1]);
+                    char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
                     
-                    if (!(convert >> receive_arg)) receive_arg = 0;
-                    cout << "hi arg" << receive_arg << endl;
+                    receive_arg = atoi(char_temp);
+                    
+
+                    cout << "hi arg" << receive_arg << endl; //error here loops
                     
                     if (sendarray[receive_arg] < 100)
                     {
                         
-                    all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
+                    all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = max(all_processes[current_p].current_LCvalue, sendarray[receive_arg]) + 1;
                         
                         all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
                         all_processes[current_p].events_done++;
@@ -115,7 +119,7 @@ int main() {
                     
                     else {
                         //do not have entry for send array
-                        
+                        current_p = (current_p + 1) % 3;
                     }
                 }
                 // the event is internal and will be assigned an LC value
@@ -129,18 +133,31 @@ int main() {
                 
                 
                 if (all_processes[current_p].events_done == M) all_processes[current_p].done = true;
-                current_p = current_p++ % 3;
+                current_p = (current_p + 1) % 3;
             }
             else {
-                current_p = current_p++ % 3;
+                current_p = (current_p + 1) % 3;
             }
-            
+            if (all_processes[current_p].events_done == all_processes[current_p].all_events) all_processes[current_p].done = true;
+        
             if (all_processes[0].done == true && all_processes[1].done == true && all_processes[2].done == true) all_done = true;
             
         }
+    //TODO
+    //if (all_processes[current_p].events_done == all_processes[current_p].all_events) all_processes[current_p].done = true;
     
-    
-    
+    for(int i = 0; i < N; i++)
+    {
+        event_count = 0;
+        while ( event_count < all_processes[i].all_events)
+        {
+            
+            cout << all_processes[i].p_events[event_count].LC_value << " ";
+            
+           event_count++;
+        }
+        cout << endl;
+    }
     
     return 0;
 }
