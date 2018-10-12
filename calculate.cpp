@@ -105,8 +105,6 @@ int main() {
                 sendarray[send_arg] = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                 all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
                 all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
-                cout << "\tEvent LC: " << all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value << endl;
-                cout << "\tProcess LC: " << all_processes[current_p].current_LCvalue << endl;
                 if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
                     all_processes[current_p].done = true;
                 }
@@ -148,8 +146,21 @@ int main() {
         else {
             current_p = (current_p + 1) % 3;
         }
+        cout << "\tEvent LC: " << all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value << endl;
+        cout << "\tProcess LC: " << all_processes[current_p].current_LCvalue << endl;
+        cout << "Send Array: ";
+        for (int i = 0; i < 10; i++) {
+          cout << sendarray[i] << " ";
+        }
+        cout << endl;
         if (all_processes[0].done == true && all_processes[1].done == true && all_processes[2].done == true) all_done = true;
     }
+
+
+
+    cout << "Event LC for P0: " << all_processes[0].p_events[0].LC_value << " " <<  all_processes[0].p_events[1].LC_value <<
+      all_processes[0].p_events[2].LC_value << " " << all_processes[0].p_events[3].LC_value << endl;
+    cout << "Process LC for P0: " << all_processes[0].current_LCvalue << endl;
 
     for(int i = 0; i < N; i++) {
         event_count = 0;
@@ -159,6 +170,7 @@ int main() {
         }
         cout << endl;
     }
+
 
     return 0;
 }
