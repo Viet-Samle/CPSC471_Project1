@@ -153,11 +153,14 @@ int main() {
     for (int i = 0; i < all_processes[2].all_events; i++) {
       if (all_processes[2].p_events[i].LC_value != all_processes[2].current_LCvalue + 1) {
         all_processes[2].p_events[i].label = 'r';
-        rcv_array[rcv_count++] = all_processes[0].p_events[i].LC_value;
+        rcv_array[rcv_count++] = all_processes[2].p_events[i].LC_value;
       }
       all_processes[2].current_LCvalue = all_processes[2].p_events[i].LC_value;
     }
-
+    for (int i = 0; i < 10; i++) {
+      cout << rcv_array[i] << " ";
+    }
+    cout << endl;
     for (int i = 0; i < all_processes[0].all_events; i++) {
       for (int j = 0; j < rcv_count; j++) {
         if (all_processes[0].p_events[i].LC_value == rcv_array[j] - 1) {
@@ -178,8 +181,8 @@ int main() {
 
     for (int i = 0; i < all_processes[0].all_events; i++) {
       for (int j = 0; j < rcv_count; j++) {
-        if (all_processes[0].p_events[i].LC_value == rcv_array[j] - 1) {
-          all_processes[0].p_events[i].label = 's';
+        if (all_processes[2].p_events[i].LC_value == rcv_array[j] - 1) {
+          all_processes[2].p_events[i].label = 's';
           rcv_array[j] = 100;
         }
       }
