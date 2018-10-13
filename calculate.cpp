@@ -25,7 +25,6 @@ public:
     event *p_events;
     int all_events;
     int events_done;
-    int current_event;
     int current_LCvalue;
     bool done;
     process();
@@ -33,7 +32,6 @@ public:
 process::process(void) {
     p_events = new event[M];
     current_LCvalue = 0;
-    current_event = 0;
     all_events = 0; //Number of events in the process
     events_done = 0; // also works as an index on what event is not done
     done = false;
@@ -56,10 +54,8 @@ int main() {
         cin >> input;
         if (input != "NULL") {
             all_processes[0].p_events[i].e = input;
-            //cout << all_processes[0].events[i][0] << endl;
             all_processes[0].all_events++;
         }
-
     }
 
     cout << "Enter the events for the second process" << endl;
@@ -81,30 +77,31 @@ int main() {
 
     }
 
-    cout << "P0: " << all_processes[0].p_events[0].e << " " << all_processes[0].p_events[1].e << " " << all_processes[0].p_events[2].e << " " << all_processes[0].p_events[3].e << endl;
-    cout << "\tEvent #: " << all_processes[0].events_done << endl;
-    cout << "\t # of Events: " << all_processes[0].all_events << endl;
-
-    cout << "P1: " << all_processes[1].p_events[0].e << " " << all_processes[1].p_events[1].e << " " << all_processes[1].p_events[2].e << endl;
-    cout << "\tEvent #: " << all_processes[0].events_done << endl;
-    cout << "\t # of Events: " << all_processes[1].all_events << endl;
-
-    cout << "P2: " << all_processes[2].p_events[0].e << " " << all_processes[2].p_events[1].e << " " << all_processes[2].p_events[2].e << " " << all_processes[2].p_events[3].e << endl;
-    cout << "\tEvent #: " << all_processes[0].events_done << endl;
-    cout << "\t # of Events: " << all_processes[2].all_events << endl;
-    cout << endl;
+    // Showing the input
+    // Showing P0
+    cout << endl << "Your input is as follows: " << endl;
+    cout << "P0: ";
+    for (int i = 0; i < all_processes[0].all_events; i++) {
+        cout << all_processes[0].p_events[i].e << " ";
+    }
+    cout << endl << "P1: ";
+    for (int i = 0; i < all_processes[1].all_events; i++) {
+        cout << all_processes[1].p_events[i].e << " ";
+    }
+    cout << endl << "P2: ";
+    for (int i = 0; i < all_processes[2].all_events; i++) {
+        cout << all_processes[2].p_events[i].e << " ";
+    }
+    cout << endl << endl;
+    cout << "The Solution is: " << endl;
     while (!all_done) {
-        // Printing the process being worked on
-        cout << "Working on P: " << current_p << endl;
-        cout << "\tEvent #: " << all_processes[current_p].events_done << endl;
-        cout << "\tEvent Type: " << all_processes[current_p].p_events[all_processes[current_p].events_done].e << endl;
         if (all_processes[current_p].done == false) {
             if (all_processes[current_p].p_events[all_processes[current_p].events_done].e[0] == 's') {
                 char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
                 send_arg = atoi(char_temp);
-                sendarray[send_arg] = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
-                all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
-                all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
+                sendarray[send_arg] = all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value = all_processes[current_p].current_LCvalue + 1;
+                all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value = all_processes[current_p].current_LCvalue + 1;
+                all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value;
                 if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
                     all_processes[current_p].done = true;
                 }
@@ -116,8 +113,8 @@ int main() {
                 char_temp = &all_processes[current_p].p_events[all_processes[current_p].events_done].e[1];
                 receive_arg = atoi(char_temp);
                 if (sendarray[receive_arg] < 100) {
-                    all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = max(all_processes[current_p].current_LCvalue, sendarray[receive_arg]) + 1;
-                    all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
+                    all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value = max(all_processes[current_p].current_LCvalue, sendarray[receive_arg]) + 1;
+                    all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value;
                     if (all_processes[current_p].events_done == all_processes[current_p].all_events) {
                         all_processes[current_p].done = true;
                     }
@@ -132,9 +129,9 @@ int main() {
             }
             // the event is internal and will be assigned an LC value
             else {
-                all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value = all_processes[current_p].current_LCvalue + 1;
+                all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value = all_processes[current_p].current_LCvalue + 1;
 
-                all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value;
+                all_processes[current_p].current_LCvalue = all_processes[current_p].p_events[all_processes[current_p].events_done].LC_value;
                 if (all_processes[current_p].events_done == all_processes[current_p].all_events - 1) {
                     all_processes[current_p].done = true;
                 }
@@ -146,22 +143,8 @@ int main() {
         else {
             current_p = (current_p + 1) % 3;
         }
-        cout << "\tEvent LC: " << all_processes[current_p].p_events[all_processes[current_p].current_event].LC_value << endl;
-        cout << "\tProcess LC: " << all_processes[current_p].current_LCvalue << endl;
-        cout << "Send Array: ";
-        for (int i = 0; i < 10; i++) {
-          cout << sendarray[i] << " ";
-        }
-        cout << endl;
         if (all_processes[0].done == true && all_processes[1].done == true && all_processes[2].done == true) all_done = true;
     }
-
-
-
-    cout << "Event LC for P0: " << all_processes[0].p_events[0].LC_value << " " <<  all_processes[0].p_events[1].LC_value <<
-      all_processes[0].p_events[2].LC_value << " " << all_processes[0].p_events[3].LC_value << endl;
-    cout << "Process LC for P0: " << all_processes[0].current_LCvalue << endl;
-
     for(int i = 0; i < N; i++) {
         event_count = 0;
         while ( event_count < all_processes[i].all_events) {
@@ -170,8 +153,6 @@ int main() {
         }
         cout << endl;
     }
-
-
     return 0;
 }
 
