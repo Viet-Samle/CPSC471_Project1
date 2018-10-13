@@ -18,7 +18,7 @@ public:
 };
 event::event(void) {
     LC_value = -1;
-    label = 'i'; //default is internal
+    label = 'i';
 }
 class process {
 public:
@@ -45,7 +45,7 @@ int main() {
     int event_count;
     int rcv_count = 0;
     int rcv_array[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
-    
+
     // Inputting LC-values
     // Inputting P0
     cout << "Enter the input for the logical clock" << endl;
@@ -75,7 +75,7 @@ int main() {
             all_processes[2].all_events++;
         }
     }
-    
+
     // Showing LC value input
     cout << endl << "Your input is as follows: " << endl;
     cout << "P0: ";
@@ -91,8 +91,8 @@ int main() {
         cout << all_processes[2].p_events[i].LC_value << " ";
     }
     cout << endl << endl;
-    
-    
+
+
     // Inputting events to Verify
     // Inputting events for P0
     cout << "Enter the events for the first process" << endl;
@@ -118,7 +118,7 @@ int main() {
             all_processes[2].p_events[i].e = event_input;
         }
     }
-    
+
     // Showing event input
     cout << endl << "Your input is as follows: " << endl;
     cout << "P0: ";
@@ -134,66 +134,69 @@ int main() {
         cout << all_processes[2].p_events[i].e << " ";
     }
     cout << endl << endl;
-    
+
     // Assigning labels (internal/send/receive) for each LC_value
     for (int i = 0; i < all_processes[0].all_events; i++) {
-        if (all_processes[0].p_events[i].LC_value != all_processes[0].current_LCvalue + 1) {
-            all_processes[0].p_events[i].label = 'r';
-            rcv_array[rcv_count++] = all_processes[0].p_events[i].LC_value;
-        }
-        all_processes[0].current_LCvalue = all_processes[0].p_events[i].LC_value;
+      if (all_processes[0].p_events[i].LC_value != all_processes[0].current_LCvalue + 1) {
+        all_processes[0].p_events[i].label = 'r';
+        rcv_array[rcv_count++] = all_processes[0].p_events[i].LC_value;
+      }
+      all_processes[0].current_LCvalue = all_processes[0].p_events[i].LC_value;
     }
     for (int i = 0; i < all_processes[1].all_events; i++) {
-        if (all_processes[1].p_events[i].LC_value != all_processes[1].current_LCvalue + 1) {
-            all_processes[1].p_events[i].label = 'r';
-            rcv_array[rcv_count++] = all_processes[1].p_events[i].LC_value;
-        }
-        all_processes[1].current_LCvalue = all_processes[1].p_events[i].LC_value;
+      if (all_processes[1].p_events[i].LC_value != all_processes[1].current_LCvalue + 1) {
+        all_processes[1].p_events[i].label = 'r';
+        rcv_array[rcv_count++] = all_processes[1].p_events[i].LC_value;
+      }
+      all_processes[1].current_LCvalue = all_processes[1].p_events[i].LC_value;
     }
     for (int i = 0; i < all_processes[2].all_events; i++) {
-        if (all_processes[2].p_events[i].LC_value != all_processes[2].current_LCvalue + 1) {
-            all_processes[2].p_events[i].label = 'r';
-            rcv_array[rcv_count++] = all_processes[0].p_events[i].LC_value;
-        }
-        all_processes[2].current_LCvalue = all_processes[2].p_events[i].LC_value;
-    }
-    
-    for (int i = 0; i < all_processes[0].all_events; i++) {
-        for (int j = 0; i < rcv_count; j++) {
-            if(all_processes[0].p_events[i].LC_value == rcv_array[j] - 1) {
-                all_processes[0].p_events[i].label = 's';
-            }
-        }
-    }
-    for (int i = 0; i < all_processes[1].all_events; i++) {
-        for (int j =0; i < rcv_count; j++) {
-            if(all_processes[1].p_events[i].LC_value == rcv_array[j] - 1) {
-                all_processes[1].p_events[i].label = 's';
-            }
-        }
-    }
-    for (int i = 0; i < all_processes[2].all_events; i++) {
-        for (int j =0; i < rcv_count; j++) {
-            if(all_processes[2].p_events[i].LC_value == rcv_array[j] - 1) {
-                all_processes[2].p_events[i].label = 's';
-            }
-        }
+      if (all_processes[2].p_events[i].LC_value != all_processes[2].current_LCvalue + 1) {
+        all_processes[2].p_events[i].label = 'r';
+        rcv_array[rcv_count++] = all_processes[0].p_events[i].LC_value;
+      }
+      all_processes[2].current_LCvalue = all_processes[2].p_events[i].LC_value;
     }
 
     for (int i = 0; i < all_processes[0].all_events; i++) {
-        cout << all_processes[0].p_events[i].label << " ";
+      for (int j = 0; j < rcv_count; j++) {
+        if (all_processes[0].p_events[i].LC_value == rcv_array[j] - 1) {
+          all_processes[0].p_events[i].label = 's';
+          rcv_array[j] = 100;
+        }
+      }
     }
-    cout << endl;
-    
+
     for (int i = 0; i < all_processes[1].all_events; i++) {
-        cout << all_processes[1].p_events[i].label << " ";
+      for (int j = 0; j < rcv_count; j++) {
+        if (all_processes[1].p_events[i].LC_value == rcv_array[j] - 1) {
+          all_processes[1].p_events[i].label = 's';
+          rcv_array[j] = 100;
+        }
+      }
+    }
+
+    for (int i = 0; i < all_processes[0].all_events; i++) {
+      for (int j = 0; j < rcv_count; j++) {
+        if (all_processes[0].p_events[i].LC_value == rcv_array[j] - 1) {
+          all_processes[0].p_events[i].label = 's';
+          rcv_array[j] = 100;
+        }
+      }
+    }
+
+    for (int i = 0; i < all_processes[0].all_events; i++) {
+      cout << all_processes[0].p_events[i].label << " ";
     }
     cout << endl;
-    
+    for (int i = 0; i < all_processes[1].all_events; i++) {
+      cout << all_processes[1].p_events[i].label << " ";
+    }
+    cout << endl;
     for (int i = 0; i < all_processes[2].all_events; i++) {
-        cout << all_processes[2].p_events[i].label << " ";
+      cout << all_processes[2].p_events[i].label << " ";
     }
     cout << endl;
-    
     return 0;
 }
+
