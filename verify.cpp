@@ -12,6 +12,7 @@ using namespace std;
 class event {
 public:
     string e;
+    string given_event;
     char label;
     int LC_value;
     event();
@@ -39,12 +40,16 @@ process::process(void) {
 
 int main() {
     int LC_input;
+    int arg;
     string event_input;
     process all_processes[N];
-    bool all_done = false;
+    char *tmp;
+    bool correct = true;
     int event_count;
     int rcv_count = 0;
+    int send_count = 0;
     int rcv_array[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+    int send_array[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
 
     // Inputting LC-values
     // Inputting P0
@@ -99,7 +104,7 @@ int main() {
     for (int i = 0; i < M; i++) {
         cin >> event_input;
         if (event_input != "NULL") {
-            all_processes[0].p_events[i].e = event_input;
+            all_processes[0].p_events[i].given_event = event_input;
         }
     }
     // Inputting events for P1
@@ -107,7 +112,7 @@ int main() {
     for (int i = 0; i < M; i++) {
         cin >> event_input;
         if (event_input != "NULL") {
-            all_processes[1].p_events[i].e = event_input;
+            all_processes[1].p_events[i].given_event = event_input;
         }
     }
     // Inputting events for P2
@@ -115,7 +120,7 @@ int main() {
     for (int i = 0; i < M; i++) {
         cin >> event_input;
         if (event_input != "NULL") {
-            all_processes[2].p_events[i].e = event_input;
+            all_processes[2].p_events[i].given_event = event_input;
         }
     }
 
@@ -123,15 +128,15 @@ int main() {
     cout << endl << "Your input is as follows: " << endl;
     cout << "P0: ";
     for (int i = 0; i < all_processes[0].all_events; i++) {
-        cout << all_processes[0].p_events[i].e << " ";
+        cout << all_processes[0].p_events[i].given_event << " ";
     }
     cout << endl << "P1: ";
     for (int i = 0; i < all_processes[1].all_events; i++) {
-        cout << all_processes[1].p_events[i].e << " ";
+        cout << all_processes[1].p_events[i].given_event << " ";
     }
     cout << endl << "P2: ";
     for (int i = 0; i < all_processes[2].all_events; i++) {
-        cout << all_processes[2].p_events[i].e << " ";
+        cout << all_processes[2].p_events[i].given_event << " ";
     }
     cout << endl << endl;
 
@@ -200,6 +205,46 @@ int main() {
       cout << all_processes[2].p_events[i].label << " ";
     }
     cout << endl;
+
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < all_processes[i].all_events; j++) {
+        if (all_processes[i].p_events[j].label == 's') {
+          tmp = &all_processes[i].p_events[j].given_event[1];
+          arg = atoi(tmp);
+          send_array[arg] = all_processes[i].p_events[j].LC_value;
+        }
+        else if(all_processes[i].p_events[j].label == 'r') {
+          tmp = &all_processes[i].p_events[j].given_event[1];
+          arg = atoi(tmp);
+          cout << arg << " | "<< all_processes[i].p_events[j].LC_value << endl;
+          rcv_array[arg] = all_processes[i].p_events[j].LC_value;
+        }
+      }
+    }
+    cout << "Receive Array: ";
+    for (int i = 0; i < 10; i++) {
+      cout << rcv_array[i] << " ";
+    }
+    cout << endl;
+    cout << "Send Array: ";
+    for (int i = 0; i < 10; i++) {
+      cout << send_array[i] << " ";
+    }
+    cout << endl;
+
+
+    for (int i = 1; i < rcv_count + 1; i++) {
+      cout << rcv_array[i] << " | " << send_array[i] << endl;
+      cout << correct << endl;
+      if (!(rcv_array[i] > send_array[i])) {
+        correct = false;
+        break;
+      }
+    }
+    if (correct) cout << "CORRECT" << endl;
+    else cout << "INCORRECT" << endl;
+
+
     return 0;
 }
 
