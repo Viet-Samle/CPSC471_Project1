@@ -13,8 +13,8 @@ Input is by console:
 Ex. For the example
 
 a1 s1 r3 b </br>
-c r2 s3 NULL
-r1 d s2 e
+c r2 s3 NULL </br>
+r1 d s2 e </br>
 
 Number of processes(N) is hard-coded. Will always be 3
 Number of events(M) can be changed by changing the #define M statement at line 11
