@@ -109,6 +109,7 @@ int main() {
         for (int k = 0; k < rcv_count; k++) {
           if (all_processes[i].p_events[j].LC_value == rcv_array[k] - 1) {
             all_processes[i].p_events[j].label = 's';
+            // Resetting the receive array[k] so that only the first value of rcv_array[k] - 1 is the send event
             rcv_array[k] = 100;
           }
         }
@@ -152,5 +153,6 @@ int main() {
 
     return 0;
 }
+
 
 
