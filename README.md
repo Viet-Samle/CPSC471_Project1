@@ -11,7 +11,8 @@ Executed with:
 
 Input is by console:
 Ex. For the example
-a1 s1 r3 b
+
+a1 s1 r3 b </br>
 c r2 s3 NULL
 r1 d s2 e
 
@@ -26,4 +27,4 @@ If there is no event in a process, NULL must be entered.
 
 
 
-For Verify algorithm
+For Verify algorith
