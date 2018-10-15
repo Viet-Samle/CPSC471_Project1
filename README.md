@@ -12,10 +12,10 @@ Executed with:</br>
 ./calculate</br>
 </br>
 File Input: Executed with </br>
-./calculate < calc_sample_input</br>
+./calculate < calc_sample_input.txt</br>
 </br>
 File Input: The events for each process is entered with a newline between each process.</br>
-Look at calc_sample_input for an example.</br>
+Look at calc_sample_input.txt for an example.</br>
 </br>
 Input is by console: Input the events for each processes. </br>
 Test Case #1:</br>
@@ -50,10 +50,10 @@ Executed with:</br>
 ./verify</br>
 </br>
 File Input: Executed with: </br>
-./verify < verify_sample_input</br>
+./verify < verify_sample_input.txt</br>
 </br>
 File Input: The LC values for each process is entered, and then the events for each process, with a new line between each process.</br>
-Look at verify_sample_input for an example.</br>
+Look at verify_sample_input.txt for an example.</br>
 </br>
 Input is by console: First, we must enter the LC values for each process and then the user will be prompted to enter the events of each process next. After doing so, the command prompt will then display the result.</br>
 
