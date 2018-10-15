@@ -9,7 +9,7 @@ g++ calculate.cpp -o calculate</br>
 Executed with:</br>
 ./calculate</br>
 
-Input is by console:</br>
+Input is by console: Input the events for each processes. </br>
 Test Case #1:</br>
 
 a1 s1 r3 b </br>
