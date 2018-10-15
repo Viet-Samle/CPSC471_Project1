@@ -38,15 +38,37 @@ for i = 0 to Number of Processes do {
          Reset receieve_array[k] to 100
          Resetting the receive array[k] so that only the first value of rcv_array[k] - 1 is the send event
          
+Print label for given events
+for i = 0 to Number of Processes do {
+  for j = 0 to all the Events do {
+      print the labels for events 
          
+for i = 0 to Number of Processes do {
+  for j = 0 to all the Events do {         
+    if label = 's' {
+      tmp = given_event[1]
+      arg = atoi(tmp)
+        create a send array
+        send_array[arg] = LC Value       
+    else if label = 'r' {
+      tmp = given_event[1]
+      arg = atoi(tmp)
+        create a receive array
+        receive_array[arg] = LC Value         
          
-         
-         
-         
-         
-         
-         
-         
+ for i = 1 to receive_count + 1 do {
+   if receive_array[i] > send_array[i] {
+     This is correct = false
+     break out of loop
+   if correct do {
+     print out "CORRECT"
+   else do {
+     print out "INCORRECT"
+   
+return
+
+
+
          
          
       
