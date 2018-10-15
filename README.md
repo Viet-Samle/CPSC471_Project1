@@ -23,7 +23,7 @@ When prompted for first process: a1 s1 r3 b is entered</br>
 When prompted for second process: c r2 s3 NULL is entered</br>
 When prompted for third process: r1 d s2 e is entered</br>
 </br>
-If there is no event in a process, NULL must be entered.</br>
+If there is no event in a process, NULL must be entered.</br></br>
 Test Case #2:</br>
 s1 b r3 e</br>
 a r2 s3 NULL</br>
