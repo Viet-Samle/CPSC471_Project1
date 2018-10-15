@@ -97,7 +97,7 @@ int main() {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < all_processes[i].all_events; j++) {
         if (all_processes[i].p_events[j].LC_value != all_processes[i].current_LCvalue + 1) {
-          all_processes[i].p_events[i].label = 'r';
+          all_processes[i].p_events[j].label = 'r';
           rcv_array[rcv_count++] = all_processes[i].p_events[j].LC_value;
         }
         all_processes[i].current_LCvalue = all_processes[i].p_events[j].LC_value;
