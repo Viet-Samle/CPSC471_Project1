@@ -9,47 +9,37 @@ process all_processes[N]
 int current_process = 0
 
 while (!all_done) {  // all_done is true once all processes are complete
-  if (process is not done) {
-    if (current_event in process is a send event) {
+  if (process is not done) 
+  
+    if (current_event in process is a send event) 
       current_event.LC_value = process.p_LC_value + 1
       process.p.LC_value = current_event.LC_value
       send[num] = current_event.LC_value
-      if (all events in process is done) {
+      if (all events in process is done) 
         process.done = true
-      }
-      else {
+      else 
         process.events_done++
-      }
-    }
-    else if (current event is a receive event) {
+        
+    else if (current event is a receive event) 
       if (there is an entry in send array in the corresponding index) {
         proces.event.LC_value = max(process.current_LCvalue, sendarray[receive_arg] // Receive arg is the number after the receive event 
         // 1 in r1, 2 in r2...
-        if (all events in process is done) {
+        if (all events in process is done) 
           process.done = true
-        }
-        else {
+        else 
           current_p = current_p + 1 % 3
-        }
-      }
-    }
-    else {       // the event is internal and will be assigned a value
+          
+    else       // the event is internal and will be assigned a value
       current_event.LC_value = process.p_LC_value + 1
       process.p.LC_value = current_event.LC_value
-      if (all events in the process is done) {
+      if (all events in the process is done) 
         process.done = true
-      }
-    }
-  }
-  else {        // The process is already complete
+        
+  else         // The process is already complete
     current_p = current_p + 1 %3
-  }
-}
 
-for (every process) {
+for (every process) 
   for (every event)
     print event.LC_value
-  }
-}
-
+    
 done
