@@ -1,4 +1,4 @@
-To input the LC-values
+To input the LC-values to verify
 for i = 0 to Number of Processes do {
   print the LC values for process N
   for j = 0 to Number of Events do {
@@ -6,5 +6,9 @@ for i = 0 to Number of Processes do {
       if LC values != 0 {
         all_processes[i].p_events[j].LC value = LC value input
         
-To show toe LC value input
+To show the LC value input
 for i = 0 to Number of Processes do {
+  for j = 0 to Number of Events do {
+     print the events of each Process with its LC value
+     
+To input the Events to verify
