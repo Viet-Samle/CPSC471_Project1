@@ -4,7 +4,7 @@ for i = 0 to Number of Processes do {
   for j = 0 to Number of Events do {
     Enter the LC values
       if LC values != 0 {
-        all_processes[i].p_events[j].LC value = LC value input
+        LC Value = LC value input
         
 To show the LC value input
 for i = 0 to Number of Processes do {
@@ -12,3 +12,41 @@ for i = 0 to Number of Processes do {
      print the events of each Process with its LC value
      
 To input the Events to verify
+for i = 0 to Number of Processes do {
+  for j = 0 to Number of Events do {
+     Input the event for each processes
+       if event input != "NULL"
+         The given event = event input
+
+To show events to verify
+for i = 0 to Number of Processes do {
+  for j = 0 to Number of Events do {
+     print the events of each Process
+     
+Label 'r'
+for i = 0 to Number of Processes do {
+  for j = 0 to all the Events do {
+     if LC value != current LC value being checked + 1  
+       Label the event 'r'
+       
+Label 's'
+for i = 0 to Number of Processes do {
+  for j = 0 to all the Events do {
+    for k = 0 to a receive_count do {
+       if LC value = receive_array[k] - 1
+         Label the event 's'
+         Reset receieve_array[k] to 100
+         Resetting the receive array[k] so that only the first value of rcv_array[k] - 1 is the send event
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+      
