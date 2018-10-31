@@ -12,7 +12,7 @@ using namespace std;
 class event {
 public:
     string e;
-    string given_event;
+    string result_event;
     char label;
     int LC_value;
     event();
@@ -48,11 +48,10 @@ int main() {
     int event_count;
     int rcv_count = 0;
     int send_count = 0;
-    int rcv_array[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
-    int send_array[10] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+    int rcv_array[10] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    int send_array[10] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
     // Inputting LC-values
-    // Inputting P0
     cout << "Enter the input for the logical clock" << endl;
     for (int i = 0; i < N; i++) {
       cout << "Enter the LC values for process " << i << endl;
@@ -74,26 +73,6 @@ int main() {
     }
     cout << endl;
 
-    // Inputting events to Verify
-    for (int i = 0; i < N; i++) {
-      cout << "Enter the events for process " << i << endl;
-      for (int j = 0; j < M; j++) {
-        cin >> event_input;
-        if (event_input != "NULL") {
-            all_processes[i].p_events[j].given_event = event_input;
-        }
-      }
-    }
-    // Showing events to verify
-    for (int i = 0; i < N; i++) {
-      cout << "P" << i << ": ";
-      for (int j = 0; j < all_processes[i].all_events; j++) {
-        cout << all_processes[i].p_events[j].given_event << " ";
-      }
-      cout << endl;
-    }
-    cout << endl;
-
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < all_processes[i].all_events; j++) {
         if (all_processes[i].p_events[j].LC_value != all_processes[i].current_LCvalue + 1) {
@@ -104,15 +83,24 @@ int main() {
       }
     }
 
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < all_processes[i].all_events; j++) {
-        for (int k = 0; k < rcv_count; k++) {
-          if (all_processes[i].p_events[j].LC_value == rcv_array[k] - 1) {
-            all_processes[i].p_events[j].label = 's';
-            // Resetting the receive array[k] so that only the first value of rcv_array[k] - 1 is the send event
-            rcv_array[k] = 100;
+    for (int i = 0; i < rcv_count; i++) {
+      cout << "Receive array at index: " << i << "\n \t Value of: " << rcv_array[i] << endl;
+      for (int j = 0; j < N; j++) {
+        for (int k = 0; k < all_processes[j].all_events; k++) {
+          // Only check internal events for send events
+          if (all_processes[j].p_events[k].label == 'i') {
+            if (all_processes[j].p_events[k].LC_value == rcv_array[i] - 1) {
+              all_processes[j].p_events[k].label = 's';
+              rcv_array[i] = -1;
+            }
           }
         }
+      }
+      // if after looping through all processes, and a value still hasn't been found for send
+      // No send exists for the receive; No solution is possible
+      if (rcv_array[i] == -1) {
+        cout << "INCORRECT" << endl;
+        return 0;
       }
     }
 
@@ -126,33 +114,8 @@ int main() {
     }
     cout << endl;
 
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < all_processes[i].all_events; j++) {
-        if (all_processes[i].p_events[j].label == 's') {
-          tmp = &all_processes[i].p_events[j].given_event[1];
-          arg = atoi(tmp);
-          send_array[arg] = all_processes[i].p_events[j].LC_value;
-        }
-        else if(all_processes[i].p_events[j].label == 'r') {
-          tmp = &all_processes[i].p_events[j].given_event[1];
-          arg = atoi(tmp);
-          rcv_array[arg] = all_processes[i].p_events[j].LC_value;
-        }
-      }
-    }
-
-    for (int i = 1; i < rcv_count + 1; i++) {
-      if (!(rcv_array[i] > send_array[i])) {
-        correct = false;
-        break;
-      }
-    }
-    if (correct) cout << "CORRECT" << endl;
-    else cout << "INCORRECT" << endl;
-
 
     return 0;
 }
-
 
 
