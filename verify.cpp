@@ -63,9 +63,10 @@ int main() {
         }
       }
     }
+    cout << "You entered: " << endl;
     // Showing LC value input
     for (int i = 0; i < N; i++) {
-      cout << "P" << i << ": ";
+      cout << "\tP" << i << ": ";
       for (int j = 0; j < all_processes[i].all_events; j++) {
         cout << all_processes[i].p_events[j].LC_value << " ";
       }
@@ -84,13 +85,14 @@ int main() {
     }
 
     for (int i = 0; i < rcv_count; i++) {
-      cout << "Receive array at index: " << i << "\n \t Value of: " << rcv_array[i] << endl;
+      //cout << "Receive array at index: " << i << "\n \t Value of: " << rcv_array[i] << endl;
       for (int j = 0; j < N; j++) {
         for (int k = 0; k < all_processes[j].all_events; k++) {
           // Only check internal events for send events
           if (all_processes[j].p_events[k].label == 'i') {
             if (all_processes[j].p_events[k].LC_value == rcv_array[i] - 1) {
               all_processes[j].p_events[k].label = 's';
+              send_array[i] = all_processes[j].p_events[k].LC_value;
               rcv_array[i] = -1;
             }
           }
@@ -98,15 +100,15 @@ int main() {
       }
       // if after looping through all processes, and a value still hasn't been found for send
       // No send exists for the receive; No solution is possible
-      if (rcv_array[i] == -1) {
+      if (send_array[i] == -1) {
         cout << "INCORRECT" << endl;
         return 0;
       }
     }
 
-    cout << "Label for given events are" << endl;
+    cout << "Label for given values are" << endl;
     for (int i = 0; i < N; i++) {
-      cout << "P" << i << ": ";
+      cout << "\yP" << i << ": ";
       for (int j = 0; j < all_processes[i].all_events; j++) {
         cout << all_processes[i].p_events[j].label << " ";
       }
@@ -114,8 +116,11 @@ int main() {
     }
     cout << endl;
 
+    //cout << "The events for the given values are: " << endl;
+
 
     return 0;
 }
+
 
 
