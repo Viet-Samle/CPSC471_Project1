@@ -11,15 +11,13 @@ using namespace std;
 
 class event {
 public:
-    string e;
-    string result_event;
-    char label;
+    string label;
     int LC_value;
     event();
 };
 event::event(void) {
     LC_value = -1;
-    label = 'i';
+    label = "i";
 }
 class process {
 public:
@@ -43,7 +41,8 @@ int main() {
     int arg;
     string event_input;
     process all_processes[N];
-    char *tmp;
+    int value;
+    string tmp;
     bool correct = true;
     int event_count;
     int rcv_count = 0;
@@ -77,7 +76,10 @@ int main() {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < all_processes[i].all_events; j++) {
         if (all_processes[i].p_events[j].LC_value != all_processes[i].current_LCvalue + 1) {
-          all_processes[i].p_events[j].label = 'r';
+          all_processes[i].p_events[j].label[0] = 'r';
+          value = rcv_count + 1;
+          tmp = to_string(value);
+          all_processes[i].p_events[j].label += tmp;
           rcv_array[rcv_count++] = all_processes[i].p_events[j].LC_value;
         }
         all_processes[i].current_LCvalue = all_processes[i].p_events[j].LC_value;
@@ -89,10 +91,12 @@ int main() {
       for (int j = 0; j < N; j++) {
         for (int k = 0; k < all_processes[j].all_events; k++) {
           // Only check internal events for send events
-          if (all_processes[j].p_events[k].label == 'i') {
+          if (all_processes[j].p_events[k].label == "i") {
             if (all_processes[j].p_events[k].LC_value == rcv_array[i] - 1) {
-              all_processes[j].p_events[k].label = 's';
+              all_processes[j].p_events[k].label = "s";
               send_array[i] = all_processes[j].p_events[k].LC_value;
+              tmp = to_string(i + 1);
+              all_processes[j].p_events[k].label += tmp;
               rcv_array[i] = -1;
             }
           }
@@ -108,7 +112,7 @@ int main() {
 
     cout << "Label for given values are" << endl;
     for (int i = 0; i < N; i++) {
-      cout << "\yP" << i << ": ";
+      cout << "\tP" << i << ": ";
       for (int j = 0; j < all_processes[i].all_events; j++) {
         cout << all_processes[i].p_events[j].label << " ";
       }
@@ -116,11 +120,9 @@ int main() {
     }
     cout << endl;
 
-    //cout << "The events for the given values are: " << endl;
 
 
     return 0;
 }
-
 
 
